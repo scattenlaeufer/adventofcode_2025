@@ -43,15 +43,49 @@ def day_05(input_path: Path) -> int:
     return ids_fresh
 
 
+def day_05_02(input_path: Path) -> int:
+    input_list = read_input_file(input_path)
+
+    fresh_ranges = []
+
+    range_limit_list = [[int(i) for i in r.split("-")] for r in input_list[0]]
+    range_limit_list.sort(key=lambda r: r[0])
+
+    for range_limits in range_limit_list:
+        done = False
+        for id_range in fresh_ranges:
+            if range_limits[1] <= id_range[1]:
+                done = True
+                break
+            if (
+                id_range[0] <= range_limits[0] <= id_range[1]
+                and range_limits[1] > id_range[1]
+            ):
+                id_range[1] = range_limits[1]
+                done = True
+                break
+
+        if not done:
+            fresh_ranges.append(range_limits)
+            fresh_ranges.sort(key=lambda r: r[0])
+
+    return sum(r[1] - r[0] + 1 for r in fresh_ranges)
+
+
 def main():
     target = 3
     result = day_05(Path("test_input"))
     print(
-        f"the number of fresh ingredients IDs in test input are {result}, target is {target}, diff {result - target}"
+        f"the number of fresh ingredients in test input are {result}, target is {target}, diff {result - target}"
     )
+    print(f"the number of fresh ingredients in real input are {day_05(Path('input'))}")
+    target = 14
+    result = day_05_02(Path("test_input"))
     print(
-        f"the number of fresh ingredients IDs in test input are {day_05(Path('input'))}"
+        f"the total number of fresh ingredients IDs in test input are {result}, target is {target}, diff {result - target}"
     )
+    result = day_05_02(Path("input"))
+    print(f"the total number of fresh ingredients IDs in real input are {result}")
 
 
 if __name__ == "__main__":
