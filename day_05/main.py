@@ -29,7 +29,16 @@ def day_05(input_path: Path) -> int:
     input_list = read_input_file(input_path)
     ids_fresh = 0
 
-    print(input_list)
+    id_range_list = []
+    for range_str in input_list[0]:
+        range_limits = range_str.split("-")
+        id_range_list.append(range(int(range_limits[0]), int(range_limits[1]) + 1))
+
+    for id_str in input_list[1]:
+        for id_range in id_range_list:
+            if int(id_str) in id_range:
+                ids_fresh += 1
+                break
 
     return ids_fresh
 
