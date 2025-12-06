@@ -27,7 +27,7 @@ def day_03(input_path: Path) -> int:
 
 
 def main():
-    target = 357
+    target = 3121910778619
     result = day_03(Path("test_input"))
     print(
         f"The sum of joltage from test input is {result}, target is {target}, diff is {result - target}"
