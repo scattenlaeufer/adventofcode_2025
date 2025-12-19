@@ -18,7 +18,16 @@ def read_input_file(input_path: Path) -> list[tuple[int, ...]]:
 def day_09(input_path: Path) -> int:
     input_list = read_input_file(input_path)
 
-    return 0
+    max_area = 0
+
+    for i, point_1 in enumerate(input_list[:-1]):
+        for point_2 in input_list[i + 1 :]:
+            max_area = max(
+                max_area,
+                (abs(point_1[0] - point_2[0]) + 1) * (abs(point_1[1] - point_2[1]) + 1),
+            )
+
+    return max_area
 
 
 def main():
